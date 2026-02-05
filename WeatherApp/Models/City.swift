@@ -9,6 +9,20 @@ struct City: Identifiable, Hashable {
     var displayName: String {
         "\(name), \(state)"
     }
+
+    static func == (lhs: City, rhs: City) -> Bool {
+        lhs.name == rhs.name
+            && lhs.state == rhs.state
+            && lhs.coordinate.latitude == rhs.coordinate.latitude
+            && lhs.coordinate.longitude == rhs.coordinate.longitude
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(state)
+        hasher.combine(coordinate.latitude)
+        hasher.combine(coordinate.longitude)
+    }
 }
 
 extension City {
