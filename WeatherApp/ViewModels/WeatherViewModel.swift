@@ -18,6 +18,8 @@ final class WeatherViewModel: ObservableObject {
 
         do {
             currentWeather = try await weatherService.currentWeather(for: selectedCity.coordinate)
+        } catch is CancellationError {
+            return
         } catch {
             errorMessage = "Unable to load weather. \(error.localizedDescription)"
             currentWeather = nil
