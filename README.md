@@ -10,7 +10,7 @@ This sample SwiftUI app shows current weather for a curated list of American cit
 ## Requirements
 - Xcode 15+
 - iOS 17+
-- WeatherKit capability enabled for your app target.
+- WeatherKit capability enabled for your app target (see `WeatherApp.entitlements`).
 
 ## Notes
 WeatherKit requires an Apple Developer account with the WeatherKit entitlement enabled. Add the capability in Xcode and run on a device or simulator signed with a valid team.
