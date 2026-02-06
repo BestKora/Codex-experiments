@@ -7,6 +7,7 @@ import WeatherKit
 final class WeatherViewModel: ObservableObject {
     @Published var selectedCity: City = City.americanCities.first ?? City(name: "New York", state: "NY", coordinate: .init(latitude: 40.7128, longitude: -74.0060))
     @Published var currentWeather: CurrentWeather?
+    @Published var dailyForecast: [DayWeather] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
 
@@ -18,12 +19,16 @@ final class WeatherViewModel: ObservableObject {
         defer { isLoading = false }
 
         do {
-            currentWeather = try await weatherService.currentWeather(for: selectedCity.coordinate)
+            async let currentWeatherTask = weatherService.currentWeather(for: selectedCity.coordinate)
+            async let dailyForecastTask = weatherService.dailyForecast(for: selectedCity.coordinate)
+            currentWeather = try await currentWeatherTask
+            dailyForecast = try await dailyForecastTask
         } catch is CancellationError {
             return
         } catch {
             errorMessage = "Unable to load weather. \(error.localizedDescription)"
             currentWeather = nil
+            dailyForecast = []
         }
     }
 }

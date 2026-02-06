@@ -18,7 +18,12 @@ struct ContentView: View {
                     if viewModel.isLoading {
                         ProgressView("Loading weather...")
                     } else if let weather = viewModel.currentWeather {
-                        WeatherSummaryView(weather: weather, city: viewModel.selectedCity)
+                        VStack(spacing: 20) {
+                            WeatherSummaryView(weather: weather, city: viewModel.selectedCity)
+                            if !viewModel.dailyForecast.isEmpty {
+                                DailyForecastView(forecast: viewModel.dailyForecast)
+                            }
+                        }
                     } else if let message = viewModel.errorMessage {
                         ContentUnavailableView("Weather Unavailable", systemImage: "cloud.sun.bolt", description: Text(message))
                     } else {
@@ -88,4 +93,40 @@ private struct WeatherMetricView: View {
 
 #Preview {
     ContentView()
+}
+
+private struct DailyForecastView: View {
+    let forecast: [DayWeather]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("7-Day Forecast")
+                .font(.headline)
+
+            ForEach(forecast, id: \.date) { day in
+                HStack {
+                    Text(day.date.formatted(.dateTime.weekday()))
+                        .frame(width: 90, alignment: .leading)
+
+                    Image(systemName: day.symbolName)
+                        .foregroundStyle(.yellow)
+                        .frame(width: 24)
+
+                    Text(day.condition.description)
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text(day.temperatureLow.formatted())
+                        .foregroundStyle(.secondary)
+
+                    Text(day.temperatureHigh.formatted())
+                        .fontWeight(.semibold)
+                }
+                .font(.subheadline)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
 }
