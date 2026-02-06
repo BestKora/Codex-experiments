@@ -119,7 +119,7 @@ private struct DailyForecastView: View {
                         .frame(width: 90, alignment: .leading)
 
                     Image(systemName: day.symbolName)
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(.blue)
                         .frame(width: 24)
 
                     Text(day.condition.description)
