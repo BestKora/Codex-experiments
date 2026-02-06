@@ -60,8 +60,18 @@ private struct WeatherSummaryView: View {
                 .font(.title3)
 
             HStack(spacing: 20) {
-                WeatherMetricView(title: "Temp", value: weather.temperature.formatted())
-                WeatherMetricView(title: "Feels like", value: weather.apparentTemperature.formatted())
+                WeatherMetricView(
+                    title: "Temp",
+                    value: weather.temperature.formatted(
+                        .measurement(width: .abbreviated, numberFormatStyle: .number.precision(.fractionLength(0)))
+                    )
+                )
+                WeatherMetricView(
+                    title: "Feels like",
+                    value: weather.apparentTemperature.formatted(
+                        .measurement(width: .abbreviated, numberFormatStyle: .number.precision(.fractionLength(0)))
+                    )
+                )
             }
 
             HStack(spacing: 20) {
@@ -116,10 +126,18 @@ private struct DailyForecastView: View {
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text(day.lowTemperature.formatted())
+                    Text(
+                        day.lowTemperature.formatted(
+                            .measurement(width: .abbreviated, numberFormatStyle: .number.precision(.fractionLength(0)))
+                        )
+                    )
                         .foregroundStyle(.secondary)
 
-                    Text(day.highTemperature.formatted())
+                    Text(
+                        day.highTemperature.formatted(
+                            .measurement(width: .abbreviated, numberFormatStyle: .number.precision(.fractionLength(0)))
+                        )
+                    )
                         .fontWeight(.semibold)
                 }
                 .font(.subheadline)
