@@ -116,10 +116,10 @@ private struct DailyForecastView: View {
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text(day.temperatureLow.formatted())
+                    Text(day.lowTemperature.formatted())
                         .foregroundStyle(.secondary)
 
-                    Text(day.temperatureHigh.formatted())
+                    Text(day.highTemperature.formatted())
                         .fontWeight(.semibold)
                 }
                 .font(.subheadline)
